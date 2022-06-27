@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator JS-Project</title>
+        <meta charset="utf-8">
+        <meta name="keywords" content="javascript, html, css">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <link rel="stylesheet" href="calculstyle.css">
+        <meta property="og:title" content="Simple Javascript Calculator Project">
+        <meta property="og:type" content="website">
+        <meta property="og:description" content="Simple Javascript Calculator by Gadev">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+        <script type="text/javascript" src="first_calc.js"></script>
+    </head>
+    <body>
+        <h1>Simple Calculator Project</h1>
+        <div class = "calculator">
+            <div class = "display">
+                <div class = "result">0</div>
+            </div>
+            <div class = "key">
+                <button id = "reset-btn">C</button>
+                <button id="back-btn" ><span class="material-icons-outlined">arrow_back</span></button>
+                <button id="percent-btn" value="%"><span class="material-icons-outlined">percent</span></button>
+                <button class = "number-input" id = "num9" value="9">9</button>
+                <button class = "number-input" id = "num8" value="8">8</button>
+                <button class = "number-input" id = "num7" value="7">7</button>
+                <button class = "number-input" id = "num6" value="6">6</button>
+                <button class = "number-input" id = "num5" value="5">5</button>
+                <button class = "number-input" id = "num4" value="4">4</button>
+                <button class = "number-input" id = "num3" value="3">3</button>
+                <button class = "number-input" id = "num2" value="2">2</button>
+                <button class = "number-input" id = "num1" value="1">1</button>
+                <button class = "number-input" id = "zero" value="0">0</button>
+                <button class = "number-input" id = "dot">.</button>
+                <button class = "operand-input" value="+">+</button>
+                <button class = "operand-input" value="-">-</button>
+                <button class = "operand-input" value="x">&times;</button>
+                <button class = "operand-input" value="/">&divide;</button>
+                <button id = "equal-btn">=</button>
+            </div>
+        </div>
+        <h2> Develop by GalihDPR</h2>
+        <script scr = "first_calc.js"></script>
+        <script>
+            //display input in result layer
+            const calcuScreen = document.querySelector('.result');
+            const updateScreen = (input)=>{
+                if(calcuScreen.innerHTML === '0'){
+                    if(input === '+'||input === '-'||input === 'x'||input === '/'||input === '%'){
+                        calcuScreen.innerHTML = '0';
+                    }else{
+                        calcuScreen.innerHTML = input;
+                    }
+                }else{
+                    calcuScreen.innerHTML = calcuScreen.innerHTML + input;
+                }
+            }
+            //handle keybutton input
+            calcuScreen.addEventListener('keydown',(event)=>{
+                console.log(`${even.key}`);
+            })
+            // handle dot button
+            const dotButton = document.querySelector('#dot');
+            dotButton.addEventListener('click',(event)=>{
+                if(calcuScreen.innerHTML === '0'){
+                    calcuScreen.innerHTML = calcuScreen.innerHTML + '.';
+                }else{
+                    calcuScreen.innerHTML = calcuScreen.innerHTML + '.';
+                }
+            })
+            // function to take value from event
+            const nums = document.querySelectorAll('.number-input');
+            nums.forEach((num)=>{
+                num.addEventListener('click',(event)=>{
+                    updateScreen(event.target.value);
+                })
+            })
+            // function to handle event on operan button 
+            const operandInput = document.querySelectorAll('.operand-input');
+            operandInput.forEach((operand)=>{
+                operand.addEventListener('click',(event)=>{
+                    let calArr = calcuScreen.innerHTML.split(/[+\-x/]/);
+                    updateScreen(event.target.value);
+                    calArr.push(event.target.value);
+                    console.log(calArr);
+                })
+            })
+            // function to handle event for C button click
+            const resetEvent = document.querySelector('#reset-btn');
+            resetEvent.addEventListener('click',()=>{
+                calcuScreen.innerHTML = '0';
+            })
+            // function to handle calculation result
+            const calculateResult = document.querySelector('#equal-btn');
+            calculateResult.addEventListener('click',()=>{
+                let resultNumber = calcuScreen.innerHTML;
+                let num = numArr(resultNumber);
+                let ops = opsArr(resultNumber);
+                calcuScreen.innerHTML = calcuFunc(num,ops);
+            })
+            // handle for percent button
+            const percentButton = document.querySelector('#percent-btn');
+            percentButton.addEventListener('click',()=>{
+                let numToPercent = calcuScreen.innerHTML
+                let pattern = /[+\-x/]/gi;
+                if(pattern.test(numToPercent)){
+                    calcuScreen.innerHTML = percentReplace(numToPercent);
+                }else{
+                    calcuScreen.innerHTML = numToPercent;
+                }    
+            })
+            // handle back button
+            const backButton = document.querySelector('#back-btn');
+            backButton.addEventListener('click',()=>{
+                let newDisplay = calcuScreen.innerHTML;
+                if(newDisplay.length>0){
+                    calcuScreen.innerHTML = backFunc(newDisplay);
+                }else{
+                    calcuScreen.innerHTML = 0;
+                }
+            })
+        </script>
+    </body>
+</html>
