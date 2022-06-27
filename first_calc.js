@@ -54,6 +54,7 @@ let calcuFunc = (a,b)=>{
 
 
 
+let dispCal = '1+3+4x4/2';
 
 
 
